@@ -1,0 +1,37 @@
+{
+  "summary": "本次 diff 在 Agent 页接入 OpenClaw：新增带官方彩色图标的 OpenClaw 行、接入开关与安装入口，并在其详情中提供「配置模型」——主模型加有序降级模型的选择、上移、移除、添加，改动即保存并在失败时内联报错；另补齐中/英/繁中/日/德文案。",
+  "scenes": [
+    {
+      "title": "Agent 列表里的 OpenClaw 与接入开关",
+      "shots": [
+        {
+          "file": "01-agents-install-openclaw.png",
+          "caption": "「安装其他 Agent」中列出的 OpenClaw 条目及其官方安装脚本",
+          "width": 2168
+        }
+      ]
+    },
+    {
+      "title": "主模型与降级模型编辑器",
+      "shots": [
+        {
+          "file": "02-openclaw-install-entry.png",
+          "caption": "「安装其他 Agent」列表里的 OpenClaw 行：官方安装脚本与复制按钮",
+          "width": 2168
+        }
+      ]
+    }
+  ],
+  "video": "preview.mp4",
+  "poster": "poster.png",
+  "errors": [
+    "Agent 列表里的 OpenClaw 与接入开关 · shot .row.agent[data-id=\"openclaw\"]: nothing visible matches .row.agent[data-id=\"openclaw\"] (0 in the page)",
+    "主模型与降级模型编辑器 · click .row.agent[data-id=\"openclaw\"] .ag-link: nothing visible matches .row.agent[data-id=\"openclaw\"] .ag-link (0 in the page)"
+  ],
+  "leak": false,
+  "skipped": null,
+  "mismatch": "",
+  "unseen": "沙盒里 OpenClaw 是全新安装、没有配置文件，所以「安装其他 Agent」中的 OpenClaw 安装脚本入口（macOS/Linux 的 script、Windows 的 PowerShell）不会出现；只读/Nix 标记、$include、损坏配置的拒绝写入，以及 JSON5 规范化、.before-magpie 备份与断开逐字节还原，都是配置文件层面的行为，界面上看不到。",
+  "interactive": true,
+  "pages": 1
+}
