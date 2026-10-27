@@ -1,0 +1,38 @@
+name: paos-release
+
+on:
+  push:
+    tags:
+      - "paos-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.x"
+          check-latest: true
+
+      - name: Build nogui binaries
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME}"
+          mkdir -p dist
+          CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags nogui -trimpath \
+            -ldflags="-s -w -X main.version=${VERSION}" -o dist/magpie-cli-windows-amd64.exe .
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags nogui -trimpath \
+            -ldflags="-s -w -X main.version=${VERSION}" -o dist/magpie-cli-linux-amd64 .
+          ls -lh dist
+          sha256sum dist/* > dist/SHA256SUMS
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
